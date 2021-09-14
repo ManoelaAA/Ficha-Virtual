@@ -1,0 +1,128 @@
+<h2>Bem vindo(a) à página de pedidos!</h2>
+<hr><div class="card">
+        <div class="card-body">
+                <label for="nome">Pesquisar número de pedido: </label>
+                <input type="number" id="termo" name="nome" placeholder="Insira o número de pedido" class="form-control" onchange="pesquisa()">
+         <label for="nome">Pesquisar data de entrega: </label>
+                <input type="text" id="termoEntrega" name="nome" placeholder="Insira a data de entrega desejada" class="form-control" onchange="pesquisaEntrega()">
+        <br>
+        <br>
+        
+
+        <script>
+            var array = []
+            var arrayEntrega = []
+            function confirma(pedido){
+                console.log(pedido)
+                if(confirm(
+                    `Você deseja marcar o pedido ${pedido} como entregue?`
+                )){
+                    link = window.location.href + `/entregar/${pedido}`
+                    console.log(link)   
+                    window.location.href = link
+                }
+            }
+
+</script>
+
+<div class="card-columns">
+{{#each Pedidos}}
+<div class="card" id="{{numpedido}}" name="{{Entrega}}">
+    <div class="card-body">
+        <h5>Número do Pedido: {{numpedido}}</h5>
+        <h6>Produtos: {{Produtos}} </h6>
+        <small>Valor: R$ {{Valor}}</small>
+        <br>
+        <small>Usuário: {{Matrícula}}</small>
+        <br>
+        <small>Entrega: {{Entrega}}</small>
+        <br>
+        <small>Data: {{Data}}</small>
+        <br>
+
+        <script>
+
+            array.push({{numpedido}})
+            arrayEntrega.push("{{Entrega}}")
+            console.log(arrayEntrega)
+            function filtro(valor){
+                console.log(String(termo))
+                valor = String(valor)
+                console.log(valor)
+                console.log(valor.startsWith(String(termo)))
+                return valor.startsWith(String(termo))
+            }
+
+            function filtroEntrega(valor){
+                console.log(String(termoEntrega))
+                valor = String(valor)
+                console.log(valor)
+                console.log(valor.startsWith(String(termoEntrega)))
+                return valor.startsWith(String(termoEntrega))
+            }
+
+            function pesquisa(){
+                termo = document.getElementById("termo").value
+                console.log(termo)
+                console.log(array)
+                if(String(termo).length >= 2){
+                    console.log("entrou no if")
+                    filtrado = array.filter(filtro)
+                    console.log(filtrado)
+                    for(var i = 0; i < array.length; i++){
+                        console.log(array[i])
+
+                        if(filtrado.includes(array[i])){
+                            document.getElementById(array[i]).style.display = ""
+                            console.log(`mostrou ${array[i]}`)
+                        }else{
+                            document.getElementById(array[i]).style.display = "none"
+                            console.log(`escondeu ${array[i]}`)                            
+                        }
+                    }
+                }
+                else{
+                    for(var i = 0; i < array.length; i++){
+                            document.getElementById(array[i]).style.display = ""
+                    }
+                }
+            }
+            
+            function pesquisaEntrega(){
+                termoEntrega = document.getElementById("termoEntrega").value
+              if(String(termoEntrega).length >= 2){
+                    console.log("entrou no if")
+                   filtradoEntrega = arrayEntrega.filter(filtroEntrega)
+                  console.log(filtradoEntrega)
+                 for(var i = 0; i < array.length; i++){
+                       console.log(arrayEntrega[i])
+
+                      if(filtradoEntrega.includes(arrayEntrega[i])){
+                       document.getElementsByName(arrayEntrega[i]).item(0).style.display = ""
+                         console.log(`mostrou ${arrayEntrega[i]}`)
+                     }else{
+                        document.getElementsByName(arrayEntrega[i]).item(0).style.display = "none"
+                        console.log(`escondeu ${arrayEntrega[i]}`)
+                        }
+                    }
+                }
+                else{
+                   for(var i = 0; i < arrayEntrega.length; i++){
+                           document.getElementsByName(arrayEntrega[i]).item(0).style.display = ""
+                   }
+               }
+            }
+        </script>
+
+        <button onclick="confirma({{numpedido}})" class="btn btn-success mt-1">Marcar como entregue</button>
+    </div>
+</div>
+    
+
+{{else}}
+    </div>
+    <h4>        Nenhum pedido registrado! Aguarde algum usuário registrar um.</h4>
+{{/each}}
+</div>
+</div>
+

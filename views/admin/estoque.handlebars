@@ -1,0 +1,82 @@
+<h2>Bem vindo(a) à página de estoque!</h2>
+<hr>
+<div class="card">
+    <div class="card-body">
+        <label for="pesquisa">Produto: </label>
+        <input type="text" id="termo" name="pesquisa" placeholder="Insira o nome do produto" class="form-control" onchange="pesquisa()">
+    
+
+<br>
+<br>
+
+<script>
+    var array = []
+
+    function save(qnt, nome){
+        console.log(qnt, " ", nome)
+        qnt = document.getElementById(qnt).value
+        nome = document.getElementById(nome).value
+        console.log(qnt, " ", nome)
+
+        link = `${window.location.href}/save/${nome}/${qnt}`
+        console.log(link)
+        window.location.href = link
+        
+        
+    }
+
+</script>
+
+
+<div class="card-columns">
+    {{#each produtos}}
+
+        <div class="card" id="{{nome}}">
+            <div class="card-body">
+                <h3>{{nome}}</h3>
+                <h6>Preço: {{preço}}</h6> 
+                <label for="credits">Quantidade do dia: </label> 
+                <input type="hidden" id="n{{nome}}" value="{{nome}}">
+                <input type="number" id="q{{nome}}"name="{{nome}}" value={{quantidade}} class="form-control">
+                <br>
+                <a class="btn btn-primary btn-block" onclick="save('q{{nome}}', 'n{{nome}}')" role="button">Salvar Alterações</a>
+
+            <script>
+            array.push("{{nome}}")
+            function filtro(valor){
+                return valor.toLowerCase().startsWith(termo.toLowerCase())
+            }
+            function pesquisa(){
+                termo = document.getElementById("termo").value
+                if(termo.length >= 3){
+                    console.log("entrou no if")
+                    filtrado = array.filter(filtro)
+                    console.log(filtrado)
+                    for(var i = 0; i < array.length; i++){
+                        if(filtrado.includes(array[i])){
+                            document.getElementById(array[i]).style.display = ""
+                            console.log(`mostrou ${array[i]}`)
+                        }else{
+                            document.getElementById(array[i]).style.display = "none"
+                            console.log(`escondeu ${array[i]}`)                            
+                        }
+                    }
+                }
+                else{
+                    for(var i = 0; i < array.length; i++){
+                            document.getElementById(array[i]).style.display = ""
+                    }
+                }
+            }
+        </script>
+            
+            
+            
+            </div>
+        </div>
+    {{/each}}
+    </div>
+
+    </div>
+</div>
+<br>

@@ -1,0 +1,52 @@
+{{#each erros}}
+    <div class="alert alert-danger">{{text}}</div>
+{{else}}
+
+{{/each}}
+    
+
+
+
+<body onload="setData({{user.matricula}}, {{user.senha}}, {{user.saldo}})">
+
+    <script>
+        function setData(id1, id2, id3){
+            var elemento = document.getElementById("nome");
+            elemento.value = id1
+            console.log("joia")
+            console.log(elemento)
+            console.log(elemento.value)
+            console.log(id1)
+            
+            elemento.value = id2
+            elemento = document.getElementById("credits");
+            elemento.value = id3
+        } 
+        
+        function salvaFirebase() {
+            var nome = document.getElementById("nome")
+            var saldo = document.getElementById("credits")
+
+            link = window.location.href.replace("edit", "saveedit")
+            link = link + `/${senha.value}/${saldo.value}`
+            console.log(link)   
+            window.location.href = link
+
+        }
+          
+    </script>
+
+    <h3>Edição de usuário:</h3>
+    <div class="card">
+        <div class="card-body">
+           
+                <label for="nome">Número de matrícula: </label>
+                <input type="number" id="nome" name="nome" placeholder="Insira o número de matrícula" class="form-control">
+                <label for="credits">Saldo do usuário: </label> 
+                <input type="number" id="credits" step="0.01" name="saldo" placeholder="Quantidade de créditos do usuário" class="form-control">
+                <br>
+                <button class="btn btn-success" onclick="salvaFirebase()">Salvar Alterações</button>
+            
+        </div>
+    </div>
+</body>

@@ -1,0 +1,51 @@
+<h2>Bem vindo(a) à página de Almoço!</h2>
+<hr>
+<div class="card">
+        <div class="card-body">
+                <label for="nome">Número de matrícula: </label>
+                <input type="number" id="termo" name="nome" placeholder="Insira o número de matrícula" class="form-control" onchange="pesquisa()">
+<br>
+<br>
+
+<script>
+    var array = []
+    function confirma(user){
+        console.log(user)
+        if(confirm(
+            `Você deseja excluir o usuário ${user}?`
+        )){
+            link = window.location.href + `/delete/${user}`
+            console.log(link)   
+            window.location.href = link
+        }
+    }
+    function confirmar(user){
+        valor = document.getElementById("s" + user).value
+        console.log(user, valor)
+        if(confirm(
+            `Você deseja cobrar ${valor} reais para o usuário ${user}?`
+        )){
+            link = window.location.href + `/cobrar/${user}/${valor}`
+            console.log(link)   
+            window.location.href = link
+        }
+    }
+        
+
+</script>
+
+<div class="card-columns">
+    {{#each usuarios}}
+<div class="card justify-content-between" id={{matricula}}>
+    <div class="card-body">
+        <h5>Nº de matrícula: {{matricula}}</h5>
+        <h6>Saldo: R$ {{saldo}}</h6>
+        <input type="number" id="s{{matricula}}" class="form-control form-control-sm" placeholder="Preço do almoço" onchange="confirmar({{matricula}})">
+       
+    </div>
+</div>
+
+{{else}}
+    <h4>Nenhum usuário registrado!</h4>
+{{/each}}
+</div>
